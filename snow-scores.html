@@ -7,6 +7,9 @@
       padding: 4px;
       border-radius: 0px 0px 8px 8px;
     }
+    .badge {
+      width:180px;
+    }
     .element {
       font-family: Memo, sans-serif; 
       width: 50%;
@@ -14,16 +17,21 @@
     .help {
       width:180px;
       font-family: Memo, sans-serif; 
+      zoom: 200%;
+    }
+    .output {
+      image-rendering: pixelated;
+      width: 360px;
     }
   </style>
   <!--https://html2canvas.hertzen.com/-->
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="/js/html2canvas.min.js"></script>
   <body>
     <div class="help">Copy score badge and post it on your favorite social media!</div>
-    <div style="width:180px;" id="badge">
+    <div class="badge" id="badge">
       <div style="background-color: #29ADFF;padding: 4px;border-radius: 8px 8px 0px 0px;">
-        <img src="images/title.png"/>
-        <img style="float:right;" src="images/playdate.png"/>
+        <img src="/images/title.png"/>
+        <img style="float:right;" src="/images/playdate.png"/>
       </div>
       <div style="height:2px;background-color: 0;"></div>
       <div class="container">
@@ -37,6 +45,7 @@
         </div>
       </div>
     </div>
+    <img id="img" class="output" />
   </body> 
   <script defer>
     const queryString = window.location.search;
@@ -56,9 +65,14 @@
     const date = urlParams.get('d');
     window.document.getElementById('date').innerText = date;
 
-    html2canvas(document.querySelector("#badge"),{backgroundColor:null}).then(canvas => {
-      document.body.appendChild(canvas);
-      document.getElementById('badge').hidden = true;
-    });    
+    html2canvas(document.querySelector("#badge"),{
+      backgroundColor:null
+    }).then(canvas => {
+        // document.body.appendChild(canvas);
+        document.getElementById('badge').hidden = true;
+        var outputImage = document.getElementById('img')        
+        var data = canvas.toDataURL('image/png');
+        outputImage.src = data;        
+      });    
   </script>
 </html>
