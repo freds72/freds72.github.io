@@ -1,0 +1,64 @@
+<html>
+  <style>
+    @font-face { font-family: Memo; src: url('/fonts/MemoBasic9h.ttf'); }
+    .container {
+      display: flex;
+      background-color: #FFF1E8;
+      padding: 4px;
+      border-radius: 0px 0px 8px 8px;
+    }
+    .element {
+      font-family: Memo, sans-serif; 
+      width: 50%;
+    }
+    .help {
+      width:180px;
+      font-family: Memo, sans-serif; 
+    }
+  </style>
+  <!--https://html2canvas.hertzen.com/-->
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <body>
+    <div class="help">Copy score badge and post it on your favorite social media!</div>
+    <div style="width:180px;" id="badge">
+      <div style="background-color: #29ADFF;padding: 4px;border-radius: 8px 8px 0px 0px;">
+        <img src="images/title.png"/>
+        <img style="float:right;" src="images/playdate.png"/>
+      </div>
+      <div style="height:2px;background-color: 0;"></div>
+      <div class="container">
+        <div class="element">
+          <div id="track">Chamois</div>
+          <div id="distance"></div>    
+        </div>
+        <div class="element">
+          <div id="date" style="text-align: right;"></div>
+          <div id="hash" style="text-align: right;"></div>    
+        </div>
+      </div>
+    </div>
+  </body> 
+  <script defer>
+    const queryString = window.location.search;
+    console.log(queryString);
+    const urlParams = new URLSearchParams(queryString);
+
+    const hash = urlParams.get('h');
+    window.document.getElementById('hash').innerText = "0x" + hash;
+
+    const track_id = urlParams.get('t');
+    const tracks = ["Marmottes","Biquettes","Chamois"];
+    window.document.getElementById('track').innerText = tracks.at(track_id) || "??";
+
+    const distance = urlParams.get('m');
+    window.document.getElementById('distance').innerText = distance + 'm';
+
+    const date = urlParams.get('d');
+    window.document.getElementById('date').innerText = date;
+
+    html2canvas(document.querySelector("#badge")).then(canvas => {
+      document.body.appendChild(canvas);
+      document.getElementById('badge').hidden = true;
+    });    
+  </script>
+</html>
